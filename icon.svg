@@ -1,0 +1,14 @@
+
+<svg xmlns="http://www.w3.org/2000/svg"
+     width="512" height="512" viewBox="0 0 512 512">
+  <rect width="512" height="512" rx="100" fill="#17324D"/>
+  <rect x="76" y="76" width="360" height="360"
+        rx="40" fill="#FFFFFF"/>
+  <path d="M130 155 L250 180 L250 355 L130 330 Z"
+        fill="#205375"/>
+  <path d="M262 180 L382 155 L382 330 L262 355 Z"
+        fill="#34799F"/>
+  <text x="256" y="425" text-anchor="middle"
+        font-size="65" font-weight="bold"
+        fill="#FFFFFF">日本語</text>
+</svg>

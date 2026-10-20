@@ -1,0 +1,19 @@
+
+{
+  "name": "日本語単語クイズ",
+  "short_name": "日本語クイズ",
+  "description": "N5・N4・N3の日本語単語を勉強するアプリ",
+  "start_url": "./index.html",
+  "scope": "./",
+  "display": "standalone",
+  "background_color": "#f3f6fa",
+  "theme_color": "#205375",
+  "icons": [
+    {
+      "src": "./icons/icon.svg",
+      "sizes": "any",
+      "type": "image/svg+xml",
+      "purpose": "any"
+    }
+  ]
+}
