@@ -10,7 +10,18 @@ const questionSets = {
     { kanji: "天気", choices: ["てんき", "てんぎ", "でんき", "てき"], answer: 0 },
     { kanji: "名前", choices: ["なまえ", "めいぜん", "なめい", "みょうぜん"], answer: 0 },
     { kanji: "食べる", choices: ["のべる", "たべる", "しょべる", "くべる"], answer: 1 },
-    { kanji: "飲み物", choices: ["たべもの", "のみもの", "のみもつ", "いんみもの"], answer: 1 }
+    { kanji: "飲み物", choices: ["たべもの", "のみもの", "のみもつ", "いんみもの"], answer: 1 },
+    { kanji: "時間", choices: ["じかん", "じげん", "しかん", "じがん"], answer: 0 },
+    { kanji: "会社", choices: ["がっこう", "かいしゃ", "かいさ", "かいじょ"], answer: 1 },
+    { kanji: "名前", choices: ["なまえ", "なめい", "なのまえ", "なまい"], answer: 0 },
+    { kanji: "電話", choices: ["でんき", "でんしゃ", "でんわ", "てんわ"], answer: 2 },
+    { kanji: "家族", choices: ["かぞく", "かそく", "がぞく", "かじょく"], answer: 0 },
+    { kanji: "毎日", choices: ["まいあさ", "まいばん", "まいにち", "まいとし"], answer: 2 },
+    { kanji: "午前", choices: ["ごご", "ごぜん", "まえ", "あさ"], answer: 1 },
+    { kanji: "午後", choices: ["ごぜん", "ごご", "ごはん", "ごと"], answer: 1 },
+    { kanji: "駅", choices: ["みせ", "えき", "いえ", "まち"], answer: 1 },
+    { kanji: "旅行", choices: ["りょこう", "りょうこう", "りょこ", "りゅこう"], answer: 0 }
+
   ],
 
   N4: [
