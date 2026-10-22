@@ -36,7 +36,19 @@ const questionSets = {
     { kanji: "解決", choices: ["かいけつ", "かいげつ", "がいけつ", "かけつ"], answer: 0 },
     { kanji: "責任", choices: ["せきにん", "せきじん", "せっにん", "せきねん"], answer: 0 },
     { kanji: "比較", choices: ["ひかく", "ひがく", "びかく", "ひこう"], answer: 0 },
-    { kanji: "賛成", choices: ["さんせい", "ざんせい", "さんぜい", "せんせい"], answer: 0 }
+    { kanji: "賛成", choices: ["さんせい", "ざんせい", "さんぜい", "せんせい"], answer: 0 },
+    
+    { kanji: "判断", choices: ["はんだん", "はんたい", "はんい", "はんそく"], answer: 0 },
+    { kanji: "原因", choices: ["けっか", "げんいん", "りゆう", "もくてき"], answer: 1 },
+    { kanji: "結果", choices: ["けっか", "けいかく", "けいけん", "けいざい"], answer: 0 },
+    { kanji: "解釈", choices: ["かいしゃく", "かいけつ", "かいわ", "かいもの"], answer: 0 },
+    { kanji: "態度", choices: ["たいど", "たいけん", "たいせつ", "たいへん"], answer: 0 },
+    { kanji: "制度", choices: ["せいかつ", "せいさん", "せいど", "せいこう"], answer: 2 },
+    { kanji: "調査", choices: ["ちょうさ", "ちょうど", "ちょうし", "ちょうせつ"], answer: 0 },
+    { kanji: "増加", choices: ["げんか", "ぞうか", "そうさ", "ぞうきん"], answer: 1 },
+    { kanji: "適切", choices: ["てきとう", "てきせつ", "ていねい", "ていこう"], answer: 1 },
+    { kanji: "共通", choices: ["きょうそう", "きょういく", "きょうつう", "きょうりょく"], answer: 2 }
+
   ]
 };
 
