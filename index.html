@@ -5,44 +5,104 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>日本語単語クイズ</title>
-  <link rel="stylesheet" href="style.css"> 
+  <link rel="stylesheet" href="style.css">
   <link rel="manifest" href="./manifest.json">
   <meta name="theme-color" content="#205375">
 </head>
 <body>
-  
-<main class="container">
-  <h1>日本語単語クイズ</h1>
-  <p class="subtitle">日本語の単語を楽しく勉強しよう！</p>
+  <main class="container">
+    <h1>日本語単語クイズ</h1>
+    <p class="subtitle">日本語の単語を楽しく勉強しよう！</p>
 
-  <section id="level-screen" class="quiz-card">
-    <h2>レベルを選んでください</h2>
-    <p>勉強したいレベルを選択してください。</p>
+    <!-- レベル選択 -->
+    <section id="level-screen" class="quiz-card">
+      <h2>レベルを選んでください</h2>
+      <p>勉強したいレベルを選択してください。</p>
 
-    <div class="level-buttons">
-      <button class="level-button" data-level="N5">N5 初級</button>
-      <button class="level-button" data-level="N4">N4 初中級</button>
-      <button class="level-button" data-level="N3">N3 中級</button>
-    </div>
-  </section>
+      <div class="level-buttons">
+        <button class="level-button" data-level="N5">N5 初級</button>
+        <button class="level-button" data-level="N4">N4 初中級</button>
+        <button class="level-button" data-level="N3">N3 中級</button>
+      </div>
+    </section>
 
-  <section id="quiz-screen" class="quiz-card" hidden>
-    <p id="question-number"></p>
-    <h2 id="question"></h2>
+    <!-- 単語一覧 -->
+    <section id="vocabulary-screen" class="quiz-card" hidden>
+      <h2 id="vocabulary-title">N5 単語一覧</h2>
+      <p>単語を覚えてから、テストに挑戦しましょう。</p>
 
-    <div id="choices" class="choices"></div>
+      <div class="table-wrapper">
+        <table>
+          <thead>
+            <tr>
+              <th>No.</th>
+              <th>漢字</th>
+              <th>読み方</th>
+              <th>မြန်မာလို အဓိပ္ပာယ်</th>
+            </tr>
+          </thead>
+          <tbody id="vocabulary-list"></tbody>
+        </table>
+      </div>
 
-    <p id="feedback" aria-live="polite"></p>
-    <p id="score">スコア：0点</p>
+      <div class="navigation-buttons">
+        <button id="vocabulary-back-button">
+          レベル選択に戻る
+        </button>
+        <button id="start-test-button">
+          テストを始める（10問）
+        </button>
+      </div>
+    </section>
 
     
-<div class="navigation-buttons">
-  <button id="back-button">レベル選択に戻る</button>
-  <button id="next-button" hidden>次の問題</button>
-</div>
+    <!-- 間違えた単語 -->
+    <section id="review-screen" class="quiz-card" hidden>
+      <h2>間違えた単語</h2>
+      <p>まちがえた単語をもう一度復習しましょう。</p>
 
-  </section>
-</main>
+      <div class="table-wrapper">
+        <table>
+          <thead>
+            <tr>
+              <th>No.</th>
+              <th>漢字</th>
+              <th>読み方</th>
+              <th>မြန်မာလို အဓိပ္ပာယ်</th>
+              <th>操作</th>
+            </tr>
+          </thead>
+          <tbody id="review-list"></tbody>
+        </table>
+      </div>
+
+      <p id="review-empty-message" hidden>
+        間違えた単語はありません。
+      </p>
+
+      <div class="navigation-buttons">
+        <button id="review-back-button">レベル選択に戻る</button>
+      </div>
+    </section>
+
+
+    <!-- テスト -->
+    <section id="quiz-screen" class="quiz-card" hidden>
+      <p id="question-number"></p>
+      <h2 id="question"></h2>
+
+      <div id="choices" class="choices"></div>
+
+      <p id="feedback" aria-live="polite"></p>
+      <p id="score">スコア：0点</p>
+
+      <div class="navigation-buttons">
+        <button id="back-button">単語一覧に戻る</button>
+        <button id="next-button" hidden>次の問題</button>
+      </div>
+    </section>
+  </main>
+
   <script src="script.js"></script>
 </body>
 </html>
