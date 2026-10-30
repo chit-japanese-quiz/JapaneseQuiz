@@ -212,6 +212,7 @@ function addReviewWord(level, word) {
   }
 }
 
+
 function showReviewWords() {
   levelScreen.hidden = true;
   vocabularyScreen.hidden = true;
@@ -241,6 +242,20 @@ function showReviewWords() {
       row.appendChild(cell);
     });
 
+    // 音声ボタンを追加
+    const voiceCell = document.createElement("td");
+    const voiceButton = document.createElement("button");
+
+    voiceButton.textContent = "🔊";
+    voiceButton.type = "button";
+    voiceButton.addEventListener("click", () => {
+      speakJapanese(`${word.kanji}、${word.reading}`);
+    });
+
+    voiceCell.appendChild(voiceButton);
+    row.appendChild(voiceCell);
+
+    // 覚えたボタン
     const actionCell = document.createElement("td");
     const deleteButton = document.createElement("button");
 
@@ -269,6 +284,7 @@ reviewBackButton.addEventListener("click", () => {
   levelScreen.hidden = false;
 });
 
+
 const levelScreen = document.getElementById("level-screen");
 const vocabularyScreen = document.getElementById("vocabulary-screen");
 const vocabularyTitle = document.getElementById("vocabulary-title");
@@ -295,6 +311,7 @@ function shuffle(items) {
   return result;
 }
 
+
 function showVocabulary(level) {
   currentLevel = level;
   levelScreen.hidden = true;
@@ -313,6 +330,19 @@ function showVocabulary(level) {
       row.appendChild(cell);
     });
 
+    // 音声ボタンを追加
+    const voiceCell = document.createElement("td");
+    const voiceButton = document.createElement("button");
+
+    voiceButton.textContent = "🔊";
+    voiceButton.type = "button";
+    voiceButton.addEventListener("click", () => {
+      speakJapanese(`${word.kanji}、${word.reading}`);
+    });
+
+    voiceCell.appendChild(voiceButton);
+    row.appendChild(voiceCell);
+
     vocabularyList.appendChild(row);
   });
 }
@@ -322,6 +352,23 @@ document.querySelectorAll(".level-button").forEach((button) => {
     showVocabulary(button.dataset.level);
   });
 });
+
+
+function speakJapanese(text) {
+  if (!("speechSynthesis" in window)) {
+    alert("このブラウザは音声読み上げに対応していません。");
+    return;
+  }
+
+  window.speechSynthesis.cancel();
+
+  const utterance = new SpeechSynthesisUtterance(text);
+  utterance.lang = "ja-JP";
+  utterance.rate = 0.9;
+
+  window.speechSynthesis.speak(utterance);
+}
+
 
 vocabularyBackButton.addEventListener("click", () => {
   vocabularyScreen.hidden = true;
@@ -523,3 +570,4 @@ if ("serviceWorker" in navigator) {
       });
   });
 }
+
