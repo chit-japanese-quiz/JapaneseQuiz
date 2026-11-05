@@ -128,3 +128,70 @@ button:disabled {
 #next-button {
   margin-left: auto;
 }
+
+/* 📱 ဖုန်း screen အတွက် table ပြင်ဆင်ခြင်း */
+@media (max-width: 600px) {
+
+  .container {
+    width: 96%;
+    margin: 30px auto;
+  }
+
+  .quiz-card {
+    padding: 15px;
+  }
+
+  .table-wrapper {
+    width: 100%;
+    overflow-x: auto;
+  }
+
+  .table-wrapper table {
+    width: 100%;
+    table-layout: fixed;
+  }
+
+  .table-wrapper th,
+  .table-wrapper td {
+    padding: 8px 4px;
+    font-size: 14px;
+    vertical-align: middle;
+  }
+
+  /* No. */
+  .table-wrapper th:nth-child(1),
+  .table-wrapper td:nth-child(1) {
+    width: 10%;
+  }
+
+  /* 漢字 */
+  .table-wrapper th:nth-child(2),
+  .table-wrapper td:nth-child(2) {
+    width: 17%;
+    white-space: nowrap;
+  }
+
+  /* 読み方 */
+  .table-wrapper th:nth-child(3),
+  .table-wrapper td:nth-child(3) {
+    width: 23%;
+    white-space: nowrap;
+  }
+
+  /* မြန်မာ meaning */
+  .table-wrapper th:nth-child(4),
+  .table-wrapper td:nth-child(4) {
+    width: 35%;
+  }
+
+  /* 🔊 button */
+  .table-wrapper th:nth-child(5),
+  .table-wrapper td:nth-child(5) {
+    width: 15%;
+  }
+
+  .table-wrapper button {
+    padding: 8px;
+    font-size: 14px;
+  }
+}

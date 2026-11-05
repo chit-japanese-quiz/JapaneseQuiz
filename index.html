@@ -26,6 +26,21 @@
       </div>
     </section>
 
+    <!-- レベル別メニュー -->
+<section id="level-menu-screen" class="quiz-card" hidden>
+  <h2 id="level-menu-title">N5 メニュー</h2>
+  <p>勉強したい内容を選んでください。</p>
+
+  <div class="level-buttons">
+    <button id="menu-vocabulary-button">言葉</button>
+    <button id="menu-quiz-button">クイズ</button>
+    <button id="menu-reading-button">文章</button>
+  </div>
+
+  <button id="level-menu-back-button">
+    レベル選択に戻る
+  </button>
+</section>
     <!-- 単語一覧 -->
     <section id="vocabulary-screen" class="quiz-card" hidden>
       <h2 id="vocabulary-title">N5 単語一覧</h2>
@@ -84,6 +99,27 @@
         <button id="review-back-button">レベル選択に戻る</button>
       </div>
     </section>
+    <!-- 文章読解・穴埋め問題 -->
+<section id="reading-screen" class="quiz-card" hidden>
+  <h2>文章読解・穴埋め問題</h2>
+
+  <p id="reading-question-number"></p>
+  <p id="reading-sentence"></p>
+
+  <div id="reading-choices" class="choices"></div>
+
+  <p id="reading-feedback" aria-live="polite"></p>
+  <p id="reading-score">スコア：0点</p>
+
+  <div class="navigation-buttons">
+    <button id="reading-back-button">
+      レベル選択に戻る
+    </button>
+    <button id="reading-next-button" hidden>
+      次の問題
+    </button>
+  </div>
+</section>
 
 
     <!-- テスト -->

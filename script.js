@@ -281,11 +281,19 @@ function showReviewWords() {
 
 reviewBackButton.addEventListener("click", () => {
   reviewScreen.hidden = true;
-  levelScreen.hidden = false;
+  levelMenuScreen.hidden = false;
 });
 
 
 const levelScreen = document.getElementById("level-screen");
+// レベル別メニューの設定
+const levelMenuScreen = document.getElementById("level-menu-screen");
+const levelMenuTitle = document.getElementById("level-menu-title");
+
+const menuVocabularyButton = document.getElementById("menu-vocabulary-button");
+const menuQuizButton = document.getElementById("menu-quiz-button");
+const menuReadingButton = document.getElementById("menu-reading-button");
+const levelMenuBackButton = document.getElementById("level-menu-back-button");
 const vocabularyScreen = document.getElementById("vocabulary-screen");
 const vocabularyTitle = document.getElementById("vocabulary-title");
 const vocabularyList = document.getElementById("vocabulary-list");
@@ -311,7 +319,35 @@ function shuffle(items) {
   return result;
 }
 
+// 言葉ボタン
+menuVocabularyButton.addEventListener("click", () => {
+  levelMenuScreen.hidden = true;
+  showVocabulary(currentLevel);
+});
 
+// クイズボタン
+menuQuizButton.addEventListener("click", () => {
+  levelMenuScreen.hidden = true;
+  startQuiz();
+});
+
+// 文章ボタン
+menuReadingButton.addEventListener("click", () => {
+  levelMenuScreen.hidden = true;
+
+  readingQuestions = [...readingQuestionData[currentLevel]];
+  readingCurrentQuestion = 0;
+  readingTotalScore = 0;
+
+  readingScreen.hidden = false;
+  showReadingQuestion();
+});
+
+// メニューに戻る
+levelMenuBackButton.addEventListener("click", () => {
+  levelMenuScreen.hidden = true;
+  levelScreen.hidden = false;
+});
 function showVocabulary(level) {
   currentLevel = level;
   levelScreen.hidden = true;
@@ -347,11 +383,21 @@ function showVocabulary(level) {
   });
 }
 
+// レベルを選んだとき
 document.querySelectorAll(".level-button").forEach((button) => {
   button.addEventListener("click", () => {
-    showVocabulary(button.dataset.level);
+    currentLevel = button.dataset.level;
+
+    levelScreen.hidden = true;
+    vocabularyScreen.hidden = true;
+    quizScreen.hidden = true;
+    readingScreen.hidden = true;
+
+    levelMenuTitle.textContent = `${currentLevel} メニュー`;
+    levelMenuScreen.hidden = false;
   });
 });
+
 
 
 function speakJapanese(text) {
@@ -372,7 +418,7 @@ function speakJapanese(text) {
 
 vocabularyBackButton.addEventListener("click", () => {
   vocabularyScreen.hidden = true;
-  levelScreen.hidden = false;
+  levelMenuScreen.hidden = false;
 });
 
 function createQuestion(word, direction, allWords) {
@@ -555,8 +601,295 @@ function showResult() {
 
 backButton.addEventListener("click", () => {
   quizScreen.hidden = true;
-  vocabularyScreen.hidden = false;
+  levelMenuScreen.hidden = false;
 });
+// 文章読解・穴埋め問題
+
+
+const readingQuestionData = {
+
+  N5: [
+    {
+      sentence: "私は毎日（　　　）で日本語を勉強します。",
+      choices: ["学校", "病院", "銀行", "会社"],
+      answer: 0
+    },
+    {
+      sentence: "日本語が分からないとき、（　　　）に聞きます。",
+      choices: ["友達", "先生", "家族", "学生"],
+      answer: 1
+    },
+    {
+      sentence: "日曜日に（　　　）と映画を見ました。",
+      choices: ["先生", "会社員", "友達", "学生"],
+      answer: 2
+    },
+    {
+      sentence: "私は毎朝（　　　）で会社へ行きます。",
+      choices: ["自転車", "写真", "時計", "電車"],
+      answer: 3
+    },
+    {
+      sentence: "明日の（　　　）はいいです。",
+      choices: ["天気", "時間", "名前", "仕事"],
+      answer: 0
+    },
+    {
+      sentence: "休みの日は（　　　）で本を読みます。",
+      choices: ["病院", "図書館", "銀行", "会社"],
+      answer: 1
+    },
+    {
+      sentence: "私は毎日（　　　）を食べます。",
+      choices: ["水", "魚", "野菜", "新聞"],
+      answer: 2
+    },
+    {
+      sentence: "旅行に行って、たくさん（　　　）を撮りました。",
+      choices: ["映画", "新聞", "料理", "写真"],
+      answer: 3
+    },
+    {
+      sentence: "毎晩、家族と一緒においしい（　　　）を食べます。",
+      choices: ["料理", "音楽", "時間", "電話"],
+      answer: 0
+    },
+    {
+      sentence: "分からない漢字があるので、（　　　）を読みます。",
+      choices: ["写真", "新聞", "天気", "自転車"],
+      answer: 1
+    }
+  ],
+
+  N4: [
+    {
+      sentence: "日本へ行く前に、旅行の（　　　）をしました。",
+      choices: ["準備", "失敗", "故障", "景色"],
+      answer: 0
+    },
+    {
+      sentence: "分からないことがあれば、先生に（　　　）してください。",
+      choices: ["予約", "相談", "運転", "卒業"],
+      answer: 1
+    },
+    {
+      sentence: "明日の会議について、みんなに（　　　）しました。",
+      choices: ["修理", "入院", "連絡", "退院"],
+      answer: 2
+    },
+    {
+      sentence: "車を運転するときは、安全に（　　　）してください。",
+      choices: ["招待", "成功", "安心", "注意"],
+      answer: 3
+    },
+    {
+      sentence: "病気がひどくなったので、病院に（　　　）しました。",
+      choices: ["入院", "卒業", "修理", "予約"],
+      answer: 0
+    },
+    {
+      sentence: "友達との（　　　）を忘れないでください。",
+      choices: ["景色", "約束", "文化", "経験"],
+      answer: 1
+    },
+    {
+      sentence: "この機械は（　　　）しているので、使えません。",
+      choices: ["成功", "説明", "故障", "安心"],
+      answer: 2
+    },
+    {
+      sentence: "日本の（　　　）について勉強しています。",
+      choices: ["理由", "場合", "住所", "文化"],
+      answer: 3
+    },
+    {
+      sentence: "試験に合格して、とても（　　　）しました。",
+      choices: ["安心", "失敗", "残念", "複雑"],
+      answer: 0
+    },
+    {
+      sentence: "電車の時間を調べるために、駅で（　　　）を見ました。",
+      choices: ["説明書", "案内", "習慣", "気持ち"],
+      answer: 1
+    }
+  ],
+  N3: [
+    {
+      sentence: "毎日練習したので、日本語が少しずつ（　　　）きました。",
+      choices: ["上手に", "危険に", "自由に", "残念に"],
+      answer: 0
+    },
+    {
+      sentence: "電車が遅れた（　　　）、授業に間に合いませんでした。",
+      choices: ["ために", "ところ", "ばかり", "かわりに"],
+      answer: 0
+    },
+    {
+      sentence: "分からない言葉の意味を辞書で（　　　）しました。",
+      choices: ["説明", "確認", "紹介", "相談"],
+      answer: 1
+    },
+    {
+      sentence: "健康のために、毎日運動する（　　　）にしています。",
+      choices: ["予定", "経験", "習慣", "理由"],
+      answer: 2
+    },
+    {
+      sentence: "この問題は難しいですが、最後まで（　　　）みます。",
+      choices: ["あきらめて", "比べて", "続いて", "頑張って"],
+      answer: 3
+    },
+    {
+      sentence: "雨が降りそうなので、傘を持って行った（　　　）です。",
+      choices: ["ほう", "ほうがいい", "こと", "もの"],
+      answer: 1
+    },
+    {
+      sentence: "彼は約束の時間に（　　　）来ました。",
+      choices: ["必ず", "急に", "特に", "十分"],
+      answer: 0
+    },
+    {
+      sentence: "この説明は少し（　　　）ので、もう一度聞きたいです。",
+      choices: ["安全", "複雑", "便利", "自由"],
+      answer: 1
+    },
+    {
+      sentence: "試験に合格できるように、毎日勉強を（　　　）います。",
+      choices: ["考えて", "比べて", "続けて", "決めて"],
+      answer: 2
+    },
+    {
+      sentence: "困ったときは、一人で考えないで先生に（　　　）してください。",
+      choices: ["連絡", "確認", "説明", "相談"],
+      answer: 3
+    }
+  ]
+};
+
+// 文章読解のレベル選択ボタン
+const readingScreen = document.getElementById("reading-screen");
+const readingQuestionNumber = document.getElementById("reading-question-number");
+const readingSentence = document.getElementById("reading-sentence");
+const readingChoices = document.getElementById("reading-choices");
+const readingFeedback = document.getElementById("reading-feedback");
+const readingScore = document.getElementById("reading-score");
+const readingNextButton = document.getElementById("reading-next-button");
+const readingBackButton = document.getElementById("reading-back-button");
+
+  // 文章読解クイズの設定
+let readingQuestions = [];
+let readingCurrentQuestion = 0;
+let readingTotalScore = 0;
+let readingAnswered = false;
+
+// 文章読解の問題を表示する
+function showReadingQuestion() {
+  const question = readingQuestions[readingCurrentQuestion];
+
+  readingAnswered = false;
+
+  readingQuestionNumber.textContent =
+    `問題 ${readingCurrentQuestion + 1} / ${readingQuestions.length}`;
+
+  readingSentence.textContent = question.sentence;
+
+  readingFeedback.textContent = "";
+
+  readingScore.textContent =
+    `スコア：${readingTotalScore}点`;
+
+  readingNextButton.hidden = true;
+
+  readingChoices.innerHTML = "";
+
+  question.choices.forEach((choice, index) => {
+    const button = document.createElement("button");
+
+    button.textContent = choice;
+
+    button.addEventListener("click", () => {
+      checkReadingAnswer(index);
+    });
+
+    readingChoices.appendChild(button);
+  });
+}
+
+// 文章読解の答えを確認する
+function checkReadingAnswer(selectedIndex) {
+  if (readingAnswered) return;
+
+  readingAnswered = true;
+
+  const question = readingQuestions[readingCurrentQuestion];
+
+  const buttons = readingChoices.querySelectorAll("button");
+
+  if (selectedIndex === question.answer) {
+    readingFeedback.textContent = "正解です！";
+    readingTotalScore += 10;
+  } else {
+    readingFeedback.textContent =
+      `不正解です。正解は「${question.choices[question.answer]}」です。`;
+  }
+
+  readingScore.textContent =
+    `スコア：${readingTotalScore}点`;
+
+  buttons.forEach((button, index) => {
+    button.disabled = true;
+
+    if (index === question.answer) {
+      button.style.backgroundColor = "#d4edda";
+    }
+  });
+
+  readingNextButton.hidden = false;
+}
+// 次の問題へ進む
+function nextReadingQuestion() {
+  readingCurrentQuestion++;
+
+  if (readingCurrentQuestion < readingQuestions.length) {
+    showReadingQuestion();
+  } else {
+    showReadingResult();
+  }
+}
+
+// 次の問題ボタン
+readingNextButton.addEventListener("click", nextReadingQuestion);
+
+// 文章読解の結果を表示する
+function showReadingResult() {
+  readingQuestionNumber.textContent = "テスト終了！";
+
+  readingSentence.textContent =
+    `あなたの点数は ${readingTotalScore} / ${readingQuestions.length * 10} 点です。`;
+
+  readingChoices.innerHTML = "";
+
+  readingFeedback.textContent = "お疲れ様でした！";
+
+  readingScore.textContent =
+    `正解数：${readingTotalScore / 10} / ${readingQuestions.length} 問`;
+
+  readingNextButton.hidden = true;
+}
+// レベル選択画面に戻る
+readingBackButton.addEventListener("click", () => {
+  readingScreen.hidden = true;
+  levelMenuScreen.hidden = false;
+});
+
+// メイン画面に戻る
+readingLevelBackButton.addEventListener("click", () => {
+  readingLevelScreen.hidden = true;
+  document.getElementById("level-screen").hidden = false;
+});
+
+// 文章読解・穴埋め問題の画面設定
 
 if ("serviceWorker" in navigator) {
   window.addEventListener("load", () => {
