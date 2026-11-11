@@ -205,3 +205,55 @@ button:disabled {
     font-size: 14px;
   }
 }
+
+
+
+/* Game Style */
+/* Game Style */
+.game-stats {
+  display: flex;
+  justify-content: space-around;
+  font-size: 18px;
+  margin-bottom: 20px;
+  background: #eef6fb;
+  padding: 10px;
+  border-radius: 8px;
+}
+
+.game-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 12px;
+  margin-bottom: 20px;
+}
+
+.game-tile {
+  padding: 15px 10px;
+  border: 2px solid #cbd5e1;
+  border-radius: 10px;
+  background: white;
+  font-size: 16px;
+  font-weight: bold;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  min-height: 60px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  white-space: pre-wrap; /* စာကြောင်းဆင်းတာ အဆင်ပြေစေရန် */
+}
+
+.game-tile.selected {
+  border-color: #205375;
+  background: #e6f3ff;
+  transform: scale(1.03);
+}
+
+.game-tile.matched {
+  border-color: #27ae60;
+  background: #d4edda;
+  color: #155724;
+  cursor: default;
+  visibility: hidden; /* မှန်သွားရင် ပျောက်သွားမည် */
+}

@@ -383,20 +383,178 @@ function showVocabulary(level) {
   });
 }
 
-// レベルを選んだとき
-document.querySelectorAll(".level-button").forEach((button) => {
+// ==========================================
+// 1. LEVEL SELECTION LOGIC
+// ==========================================
+document.querySelectorAll("#level-screen .level-button").forEach((button) => {
   button.addEventListener("click", () => {
-    currentLevel = button.dataset.level;
+    currentLevel = button.dataset.level; // N5, N4, N3 တန်ဖိုး ယူမည်
 
-    levelScreen.hidden = true;
-    vocabularyScreen.hidden = true;
-    quizScreen.hidden = true;
-    readingScreen.hidden = true;
+    if (levelScreen) levelScreen.hidden = true;
+    if (vocabularyScreen) vocabularyScreen.hidden = true;
+    if (quizScreen) quizScreen.hidden = true;
+    if (readingScreen) readingScreen.hidden = true;
+    if (gameScreen) gameScreen.hidden = true;
 
-    levelMenuTitle.textContent = `${currentLevel} メニュー`;
-    levelMenuScreen.hidden = false;
+    if (levelMenuTitle) {
+      levelMenuTitle.textContent = `${currentLevel} メニュー`;
+    }
+    if (levelMenuScreen) {
+      levelMenuScreen.hidden = false;
+    }
   });
 });
+
+// ==========================================
+// 2. WORD MATCHING GAME LOGIC
+// ==========================================
+const gameScreen = document.getElementById("game-screen");
+const gameGrid = document.getElementById("game-grid");
+const gameTimerEl = document.getElementById("game-timer");
+const gameScoreEl = document.getElementById("game-score");
+const menuGameButton = document.getElementById("menu-game-button");
+const gameBackButton = document.getElementById("game-back-button");
+const gameRestartButton = document.getElementById("game-restart-button");
+
+let selectedTile = null;
+let gameScore = 0;
+let gameTimer = 60;
+let gameInterval = null;
+
+// ゲーム (言葉をつなぐ) ခလုတ်နှိပ်လျှင်
+if (menuGameButton) {
+  menuGameButton.addEventListener("click", () => {
+    if (levelMenuScreen) levelMenuScreen.hidden = true;
+    startGame();
+  });
+}
+
+// မီနူးသို့ ပြန်သွားမည်
+if (gameBackButton) {
+  gameBackButton.addEventListener("click", () => {
+    clearInterval(gameInterval);
+    if (gameScreen) gameScreen.hidden = true;
+    if (levelMenuScreen) levelMenuScreen.hidden = false;
+  });
+}
+
+// တစ်ကြိမ်ပြန်ဆော့မည်
+if (gameRestartButton) {
+  gameRestartButton.addEventListener("click", startGame);
+}
+
+function startGame() {
+  if (gameScreen) gameScreen.hidden = false;
+
+  gameScore = 0;
+  gameTimer = 60;
+  selectedTile = null;
+  
+  if (gameScoreEl) gameScoreEl.textContent = gameScore;
+  if (gameTimerEl) gameTimerEl.textContent = gameTimer;
+
+  // အချိန်စက်နာရီ
+  clearInterval(gameInterval);
+  gameInterval = setInterval(() => {
+    gameTimer--;
+    if (gameTimerEl) gameTimerEl.textContent = gameTimer;
+
+    if (gameTimer <= 0) {
+      clearInterval(gameInterval);
+      alert(`အချိန်ပြည့်သွားပါပြီ! ရရှိသောအမှတ်: ${gameScore}`);
+    }
+  }, 1000);
+
+  renderGameGrid();
+}
+
+function renderGameGrid() {
+  if (!gameGrid) return;
+  gameGrid.innerHTML = "";
+
+  // ရွေးထားသော Level (သို့) Default N5 မှ Vocabulary Data ယူခြင်း
+  const activeLevel = (currentLevel && vocabularySets[currentLevel]) ? currentLevel : "N5";
+  const wordList = vocabularySets[activeLevel];
+
+  if (!wordList || wordList.length === 0) {
+    gameGrid.innerHTML = "<p style='grid-column: 1/-1;'>စကားလုံးများ ရှာမတွေ့ပါ။</p>";
+    return;
+  }
+
+  // စကားလုံး ၄ လုံး Random ရွေးမည် (ကတ်ပြား ၈ ခုဖြစ်မည်)
+  const selectedWords = shuffle(wordList).slice(0, 4);
+
+  let tilesData = [];
+  selectedWords.forEach((word) => {
+    tilesData.push({
+      id: word.kanji,
+      text: `${word.kanji}\n(${word.reading})`,
+      type: "jp"
+    });
+    tilesData.push({
+      id: word.kanji,
+      text: word.meaning,
+      type: "mm"
+    });
+  });
+
+  // ကတ်ပြားများကို ရောမွှေမည်
+  tilesData = shuffle(tilesData);
+
+  // HTML Grid ထဲ ကတ်ပြားများ ထည့်မည်
+  tilesData.forEach((item) => {
+    const tileBtn = document.createElement("button");
+    tileBtn.type = "button";
+    tileBtn.className = "game-tile";
+    tileBtn.innerText = item.text;
+    tileBtn.dataset.id = item.id;
+
+    tileBtn.addEventListener("click", () => {
+      handleTileClick(tileBtn, item);
+    });
+
+    gameGrid.appendChild(tileBtn);
+  });
+}
+
+function handleTileClick(tileBtn, item) {
+  if (tileBtn.classList.contains("matched") || tileBtn === selectedTile) return;
+
+  // ဂျပန်စာဖြစ်လျှင် အသံထွက်ပေးမည်
+  if (item.type === "jp" && typeof speakJapanese === "function") {
+    speakJapanese(item.id);
+  }
+
+  if (!selectedTile) {
+    selectedTile = tileBtn;
+    tileBtn.classList.add("selected");
+  } else {
+    if (selectedTile.dataset.id === tileBtn.dataset.id) {
+      // မှန်သွားပါက
+      selectedTile.classList.remove("selected");
+      selectedTile.classList.add("matched");
+      tileBtn.classList.add("matched");
+      selectedTile = null;
+
+      gameScore += 10;
+      if (gameScoreEl) gameScoreEl.textContent = gameScore;
+
+      // ကတ်ပြား ကုန်သွားပါက နောက်တစ်ပွဲ ပေါ်မည်
+      const remainingTiles = gameGrid.querySelectorAll(".game-tile:not(.matched)");
+      if (remainingTiles.length === 0) {
+        setTimeout(renderGameGrid, 500);
+      }
+    } else {
+      // မှားသွားပါက
+      tileBtn.classList.add("selected");
+      setTimeout(() => {
+        if (selectedTile) selectedTile.classList.remove("selected");
+        tileBtn.classList.remove("selected");
+        selectedTile = null;
+      }, 400);
+    }
+  }
+}
 
 
 

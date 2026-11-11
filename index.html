@@ -34,11 +34,13 @@
   <h2 id="level-menu-title">N5 メニュー</h2>
   <p>勉強したい内容を選んでください。</p>
 
-  <div class="level-buttons">
-    <button id="menu-vocabulary-button">言葉</button>
-    <button id="menu-quiz-button">クイズ</button>
-    <button id="menu-reading-button">文章</button>
-  </div>
+  <!-- level-menu-screen ထဲမှာ ဒီလိုပြောင်းပေးပါ -->
+<div class="level-buttons">
+  <button id="menu-vocabulary-button">言葉</button>
+  <button id="menu-quiz-button">クイズ</button>
+  <button id="menu-reading-button">文章</button>
+  <button id="menu-game-button" class="game-menu-btn" style="background-color: #27ae60; color: white;">ゲーム (言葉をつなぐ)</button>
+</div>
 
   <button id="level-menu-back-button">
     レベル選択に戻る
@@ -140,6 +142,23 @@
         <button id="next-button" hidden>次の問題</button>
       </div>
     </section>
+    <!-- 言葉をつなぐ ဂိမ်း Screen -->
+<section id="game-screen" class="quiz-card" hidden>
+  <h2>言葉をつなぐ (Word Matching)</h2>
+  <p>ဂျပန်စာလုံးနှင့် မြန်မာအဓိပ္ပာယ် ကိုက်ညီသည်များကို တွဲဆက်ပါ။</p>
+
+  <div class="game-stats">
+    <span>အချိန်: <b id="game-timer">60</b> စက္ကန့်</span>
+    <span>အမှတ်: <b id="game-score">0</b></span>
+  </div>
+
+  <div id="game-grid" class="game-grid"></div>
+
+  <div class="navigation-buttons">
+    <button id="game-back-button">メニューに戻る</button>
+    <button id="game-restart-button" style="background: #205375; color: white;">もう一度</button>
+  </div>
+</section>
   </main>
 
   <script src="script.js"></script>
