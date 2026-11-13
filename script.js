@@ -1,111 +1,109 @@
-
-const vocabularyData = {
-  N5: `
-学校|がっこう|ကျောင်း
-先生|せんせい|ဆရာ ဆရာမ
-友達|ともだち|သူငယ်ချင်း
-時間|じかん|အချိန်
-毎日|まいにち|နေ့တိုင်း
-電車|でんしゃ|လျှပ်စစ်ရထား
-天気|てんき|ရာသီဥတု
-名前|なまえ|အမည်
-食べる|たべる|စားသည်
-飲み物|のみもの|သောက်စရာ
-日本|にほん|ဂျပန်နိုင်ငံ
-会社|かいしゃ|ကုမ္ပဏီ
-家族|かぞく|မိသားစု
-学生|がくせい|ကျောင်းသား
-会社員|かいしゃいん|ကုမ္ပဏီဝန်ထမ်း
-病院|びょういん|ဆေးရုံ
-銀行|ぎんこう|ဘဏ်
-図書館|としょかん|စာကြည့်တိုက်
-料理|りょうり|ဟင်းလျာ ချက်ပြုတ်ခြင်း
-野菜|やさい|ဟင်းသီးဟင်းရွက်
-果物|くだもの|သစ်သီး
-牛肉|ぎゅうにく|အမဲသား
-魚|さかな|ငါး
-自転車|じてんしゃ|စက်ဘီး
-旅行|りょこう|ခရီးသွားခြင်း
-写真|しゃしん|ဓာတ်ပုံ
-映画|えいが|ရုပ်ရှင်
-音楽|おんがく|ဂီတ
-勉強|べんきょう|စာလေ့လာခြင်း
-仕事|しごと|အလုပ်
-家|いえ|အိမ်
-部屋|へや|အခန်း
-時計|とけい|နာရီ
-電話|でんわ|တယ်လီဖုန်း
-本|ほん|စာအုပ်
-新聞|しんぶん|သတင်းစာ
-水|みず|ရေ
-お金|おかね|ပိုက်ဆံ
-買う|かう|ဝယ်သည်
-売る|うる|ရောင်းသည်
-行く|いく|သွားသည်
-来る|くる|လာသည်
-帰る|かえる|ပြန်သည်
-見る|みる|ကြည့်သည်
-聞く|きく|နားထောင်သည် မေးသည်
-読む|よむ|ဖတ်သည်
-書く|かく|ရေးသည်
-話す|はなす|စကားပြောသည်
-休み|やすみ|နားရက် အနားယူခြင်း
-天気予報|てんきよほう|မိုးလေဝသခန့်မှန်းချက်
-`.trim(),
-
+// ၁။ Raw Data များ (N5, N4, N3)
+const rawVocabularyData = {
+  N5: [
+    { kanji: "食べる", reading: "たべる", meanings: { mm: "စားသည်", en: "to eat", id: "makan", vi: "ăn", ph: "kumain" } },
+    { kanji: "飲む", reading: "のむ", meanings: { mm: "သောက်သည်", en: "to drink", id: "minum", vi: "uống", ph: "uminom" } },
+    { kanji: "学校", reading: "がっこう", meanings: { mm: "ကျောင်း", en: "school", id: "sekolah", vi: "trường học", ph: "paaralan" } },
+    { kanji: "先生", reading: "せんせい", meanings: { mm: "ဆရာ ဆရာမ", en: "teacher", id: "guru", vi: "giáo viên", ph: "guro" } },
+    { kanji: "友達", reading: "ともだち", meanings: { mm: "သူငယ်ချင်း", en: "friend", id: "teman", vi: "bạn bè", ph: "kaibigan" } },
+    { kanji: "時間", reading: "じかん", meanings: { mm: "အချိန်", en: "time", id: "waktu", vi: "thời gian", ph: "oras" } },
+    { kanji: "毎日", reading: "まいにち", meanings: { mm: "နေ့တိုင်း", en: "every day", id: "setiap hari", vi: "mỗi ngày", ph: "araw-araw" } },
+    { kanji: "電車", reading: "でんしゃ", meanings: { mm: "လျှပ်စစ်ရထား", en: "train", id: "kereta", vi: "xe lửa", ph: "tren" } },
+    { kanji: "天気", reading: "てんき", meanings: { mm: "ရာသီဥတု", en: "weather", id: "cuaca", vi: "thời tiết", ph: "panahon" } },
+    { kanji: "名前", reading: "なまえ", meanings: { mm: "အမည်", en: "name", id: "nama", vi: "tên", ph: "pangalan" } },
+    { kanji: "日本", reading: "にほん", meanings: { mm: "ဂျပန်နိုင်ငံ", en: "Japan", id: "Jepang", vi: "Nhật Bản", ph: "Hapon" } },
+    { kanji: "会社", reading: "かいしゃ", meanings: { mm: "ကုမ္ပဏီ", en: "company", id: "perusahaan", vi: "công ty", ph: "kumpanya" } },
+    { kanji: "家族", reading: "かぞく", meanings: { mm: "မိသားစု", en: "family", id: "keluarga", vi: "gia đình", ph: "pamilya" } },
+    { kanji: "学生", reading: "がくせい", meanings: { mm: "ကျောင်းသား", en: "student", id: "pelajar", vi: "học sinh", ph: "estudyante" } },
+    { kanji: "会社員", reading: "かいしゃいん", meanings: { mm: "ကုမ္ပဏီဝန်ထမ်း", en: "company employee", id: "karyawan perusahaan", vi: "nhân viên công ty", ph: "empleado ng kumpanya" } },
+    { kanji: "病院", reading: "びょういん", meanings: { mm: "ဆေးရုံ", en: "hospital", id: "rumah sakit", vi: "bệnh viện", ph: "ospital" } },
+    { kanji: "銀行", reading: "ぎんこう", meanings: { mm: "ဘဏ်", en: "bank", id: "bank", vi: "ngân hàng", ph: "bangko" } },
+    { kanji: "図書館", reading: "としょかん", meanings: { mm: "စာကြည့်တိုက်", en: "library", id: "perpustakaan", vi: "thư viện", ph: "aklatan" } },
+    { kanji: "料理", reading: "りょうり", meanings: { mm: "ဟင်းလျာ ချက်ပြုတ်ခြင်း", en: "cooking / dish", id: "masakan", vi: "món ăn", ph: "pagluluto" } },
+    { kanji: "野菜", reading: "やさい", meanings: { mm: "ဟင်းသီးဟင်းရွက်", en: "vegetable", id: "sayur", vi: "rau", ph: "gulay" } },
+    { kanji: "果物", reading: "くだもの", meanings: { mm: "သစ်သီး", en: "fruit", id: "buah", vi: "trái cây", ph: "prutas" } },
+    { kanji: "牛肉", reading: "ぎゅうにく", meanings: { mm: "အမဲသား", en: "beef", id: "daging sapi", vi: "thịt bò", ph: "karne ng baka" } },
+    { kanji: "魚", reading: "さかな", meanings: { mm: "ငါး", en: "fish", id: "ikan", vi: "cá", ph: "isda" } },
+    { kanji: "自転車", reading: "じてんしゃ", meanings: { mm: "စက်ဘီး", en: "bicycle", id: "sepeda", vi: "xe đạp", ph: "bisikleta" } },
+    { kanji: "旅行", reading: "りょこう", meanings: { mm: "ခရီးသွားခြင်း", en: "travel", id: "wisata", vi: "du lịch", ph: "paglalakbay" } },
+    { kanji: "写真", reading: "しゃしん", meanings: { mm: "ဓာတ်ပုံ", en: "photograph", id: "foto", vi: "bức ảnh", ph: "larawan" } },
+    { kanji: "映画", reading: "えいが", meanings: { mm: "ရုပ်ရှင်", en: "movie", id: "film", vi: "phim", ph: "pelikula" } },
+    { kanji: "音楽", reading: "おんがく", meanings: { mm: "ဂီတ", en: "music", id: "musik", vi: "âm nhạc", ph: "musika" } },
+    { kanji: "勉強", reading: "べんきょう", meanings: { mm: "စာလေ့လာခြင်း", en: "study", id: "belajar", vi: "học tập", ph: "pag-aaral" } },
+    { kanji: "仕事", reading: "しごと", meanings: { mm: "အလုပ်", en: "work / job", id: "pekerjaan", vi: "công việc", ph: "trabaho" } },
+    { kanji: "家", reading: "いえ", meanings: { mm: "အိမ်", en: "house", id: "rumah", vi: "nhà", ph: "bahay" } },
+    { kanji: "部屋", reading: "へや", meanings: { mm: "အခန်း", en: "room", id: "kamar", vi: "phòng", ph: "silid" } },
+    { kanji: "時計", reading: "とけい", meanings: { mm: "နာရီ", en: "clock / watch", id: "jam", vi: "đồng hồ", ph: "orasan" } },
+    { kanji: "電話", reading: "でんわ", meanings: { mm: "တယ်လီဖုန်း", en: "telephone", id: "telepon", vi: "điện thoại", ph: "telepono" } },
+    { kanji: "本", reading: "ほん", meanings: { mm: "စာအုပ်", en: "book", id: "buku", vi: "sách", ph: "aklat" } },
+    { kanji: "新聞", reading: "しんぶん", meanings: { mm: "သတင်းစာ", en: "newspaper", id: "koran", vi: "báo chí", ph: "pahayagan" } },
+    { kanji: "水", reading: "みず", meanings: { mm: "ရေ", en: "water", id: "air", vi: "nước", ph: "tubig" } },
+    { kanji: "お金", reading: "おかね", meanings: { mm: "ပိုက်ဆံ", en: "money", id: "uang", vi: "tiền", ph: "pera" } },
+    { kanji: "買う", reading: "かう", meanings: { mm: "ဝယ်သည်", en: "to buy", id: "membeli", vi: "mua", ph: "bumili" } },
+    { kanji: "売る", reading: "うる", meanings: { mm: "ရောင်းသည်", en: "to sell", id: "menjual", vi: "bán", ph: "magbenta" } },
+    { kanji: "行く", reading: "いく", meanings: { mm: "သွားသည်", en: "to go", id: "pergi", vi: "đi", ph: "pumunta" } },
+    { kanji: "来る", reading: "くる", meanings: { mm: "လာသည်", en: "to come", id: "datang", vi: "đến", ph: "dumating" } },
+    { kanji: "帰る", reading: "かえる", meanings: { mm: "ပြန်သည်", en: "to return", id: "pulang", vi: "về nhà", ph: "umuwi" } },
+    { kanji: "見る", reading: "みる", meanings: { mm: "ကြည့်သည်", en: "to see", id: "melihat", vi: "xem", ph: "tingnan" } },
+    { kanji: "聞く", reading: "きく", meanings: { mm: "နားထောင်သည် မေးသည်", en: "to listen / ask", id: "mendengar", vi: "nghe", ph: "makinig" } },
+    { kanji: "読む", reading: "よむ", meanings: { mm: "ဖတ်သည်", en: "to read", id: "membaca", vi: "đọc", ph: "magbasa" } },
+    { kanji: "書く", reading: "かく", meanings: { mm: "ရေးသည်", en: "to write", id: "menulis", vi: "viết", ph: "sulat" } },
+    { kanji: "話す", reading: "はなす", meanings: { mm: "စကားပြောသည်", en: "to speak", id: "berbicara", vi: "nói chuyện", ph: "magsalita" } },
+    { kanji: "休み", reading: "やすみ", meanings: { mm: "နားရက် အနားယူခြင်း", en: "rest / holiday", id: "libur", vi: "nghỉ ngơi", ph: "pahinga" } },
+    { kanji: "天気予報", reading: "てんきよほう", meanings: { mm: "မိုးလေဝသခန့်မှန်းချက်", en: "weather forecast", id: "prakiraan cuaca", vi: "dự báo thời tiết", ph: "pagtataya ng panahon" } }
+  ],
   N4: `
-経験|けいけん|အတွေ့အကြုံ
-必要|ひつよう|လိုအပ်ခြင်း
-説明|せつめい|ရှင်းပြခြင်း
-準備|じゅんび|ပြင်ဆင်ခြင်း
-連絡|れんらく|ဆက်သွယ်ခြင်း
-特別|とくべつ|အထူး
-安心|あんしん|စိတ်အေးချမ်းခြင်း
-安全|あんぜん|ဘေးကင်းခြင်း
-注意|ちゅうい|သတိထားခြင်း
-失敗|しっぱい|အမှား ကျရှုံးခြင်း
-相談|そうだん|တိုင်ပင်ခြင်း
-約束|やくそく|ကတိ ချိန်းဆိုချက်
-連休|れんきゅう|ရုံးပိတ်ရက်ဆက်တိုက်
-予約|よやく|ကြိုတင်ဘိုကင်
-景色|けしき|ရှုခင်း
-運転|うんてん|ယာဉ်မောင်းခြင်း
-文化|ぶんか|ယဉ်ကျေးမှု
-習慣|しゅうかん|အလေ့အကျင့်
-特急|とっきゅう|အမြန်ရထား
-交通|こうつう|သယ်ယူပို့ဆောင်ရေး
-場合|ばあい|အခြေအနေ အခါ
-気持ち|きもち|ခံစားချက်
-返事|へんじ|အကြောင်းပြန်ခြင်း
-説明書|せつめいしょ|အသုံးပြုနည်းလမ်းညွှန်
-住所|じゅうしょ|လိပ်စာ
-理由|りゆう|အကြောင်းပြချက်
-景気|けいき|စီးပွားရေးအခြေအနေ
-残念|ざんねん|စိတ်မကောင်းဖြစ်စရာ
-複雑|ふくざつ|ရှုပ်ထွေးသော
-成功|せいこう|အောင်မြင်ခြင်း
-失礼|しつれい|ရိုင်းပျခြင်း ခွင့်ပြုပါ
-招待|しょうたい|ဖိတ်ကြားခြင်း
-案内|あんない|လမ်းညွှန်ခြင်း
-卒業|そつぎょう|ကျောင်းပြီးခြင်း
-入院|にゅういん|ဆေးရုံတက်ခြင်း
-退院|たいいん|ဆေးရုံဆင်းခြင်း
-故障|こしょう|ပျက်စီးခြင်း
-修理|しゅうり|ပြုပြင်ခြင်း
-特に|とくに|အထူးသဖြင့်
-最近|さいきん|မကြာသေးမီက
-最初|さいしょ|အစပိုင်း
-最後|さいご|နောက်ဆုံး
-途中|とちゅう|လမ်းခုလတ်
-以外|いがい|မှအပ
-以内|いない|အတွင်း
-以上|いじょう|အထက် အနည်းဆုံး
-以下|いか|အောက် မပိုသော
-必ず|かならず|မဖြစ်မနေ
-十分|じゅうぶん|လုံလောက်သော
-自由|じゆう|လွတ်လပ်ခြင်း
+経験|けいけん|အတွေ့အကြုံ|experience|pengalaman|kinh nghiệm|karanasan
+必要|ひつよう|လိုအပ်ခြင်း|necessity|kebutuhan|sự cần thiết|pangangailangan
+説明|せつめい|ရှင်းပြခြင်း|explanation|penjelasan|giải thích|paliwanag
+準備|じゅんび|ပြင်ဆင်ခြင်း|preparation|persiapan|chuẩn bị|paghahanda
+連絡|れんらく|ဆက်သွယ်ခြင်း|contact|kontak|liên lạc|pakikipag-ugnayan
+特別|とくべつ|အထူး|special|khusus|đặc biệt|espesyal
+安心|あんしん|စိတ်အေးချမ်းခြင်း|peace of mind|ketenangan|yên tâm|kapanatagan
+安全|あんぜん|ဘေးကင်းခြင်း|safety|keamanan|an toàn|kaligtasan
+注意|ちゅうい|သတိထားခြင်း|caution|perhatian|chú ý|pag-iingat
+失敗|しっぱい|အမှား၊ ကျရှုံးခြင်း|failure|kegagalan|thất bại|kabiguan
+相談|そうだん|တိုင်ပင်ခြင်း|consultation|konsultasi|tư vấn|konsultasyon
+約束|やくそく|ကတိ၊ ချိန်းဆိုချက်|promise, appointment|janji|lời hứa, cuộc hẹn|pangako, tipanan
+連休|れんきゅう|ရုံးပိတ်ရက်ဆက်တိုက်|consecutive holidays|libur berturut-turut|kỳ nghỉ liên tiếp|sunod-sunod na bakasyon
+予約|よやく|ကြိုတင်ဘိုကင်|reservation|reservasi|đặt trước|reserbasyon
+景色|けしき|ရှုခင်း|scenery|pemandangan|phong cảnh|tanawin
+運転|うんてん|ယာဉ်မောင်းခြင်း|driving|mengemudi|lái xe|pagmamaneho
+文化|ぶんか|ယဉ်ကျေးမှု|culture|budaya|văn hóa|kultura
+習慣|しゅうかん|အလေ့အကျင့်|habit, custom|kebiasaan|thói quen|ugali
+特急|とっきゅう|အမြန်ရထား|limited express train|kereta ekspres terbatas|tàu tốc hành|tren ekspres
+交通|こうつう|သယ်ယူပို့ဆောင်ရေး|transportation|transportasi|giao thông|transportasyon
+場合|ばあい|အခြေအနေ၊ အခါ|case, situation|kasus, situasi|trường hợp, tình huống|kaso, sitwasyon
+気持ち|きもち|ခံစားချက်|feeling|perasaan|cảm xúc|damdamin
+返事|へんじ|အကြောင်းပြန်ခြင်း|reply, response|balasan|trả lời|sagot
+説明書|せつめいしょ|အသုံးပြုနည်းလမ်းညွှန်|instruction manual|petunjuk penggunaan|hướng dẫn sử dụng|manwal ng paggamit
+住所|じゅうしょ|လိပ်စာ|address|alamat|địa chỉ|address
+理由|りゆう|အကြောင်းပြချက်|reason|alasan|lý do|dahilan
+景気|けいき|စီးပွားရေးအခြေအနေ|economic conditions|kondisi ekonomi|tình hình kinh tế|kalagayan ng ekonomiya
+残念|ざんねん|စိတ်မကောင်းဖြစ်စရာ|regrettable|disayangkan|đáng tiếc|nakakalungkot
+複雑|ふくざつ|ရှုပ်ထွေးသော|complicated|rumit|phức tạp|kumplikado
+成功|せいこう|အောင်မြင်ခြင်း|success|keberhasilan|thành công|tagumpay
+失礼|しつれい|ရိုင်းပျခြင်း၊ ခွင့်ပြုပါ|rude, excuse me|tidak sopan, permisi|thất lễ, xin phép|bastos, paumanhin
+招待|しょうたい|ဖိတ်ကြားခြင်း|invitation|undangan|lời mời|imbita
+案内|あんない|လမ်းညွှန်ခြင်း|guidance, information|panduan, informasi|hướng dẫn, thông tin|gabay, impormasyon
+卒業|そつぎょう|ကျောင်းပြီးခြင်း|graduation|kelulusan|tốt nghiệp|pagtatapos
+入院|にゅういん|ဆေးရုံတက်ခြင်း|hospitalization|rawat inap|nhập viện|pagpapaospital
+退院|たいいん|ဆေးရုံဆင်းခြင်း|leaving the hospital|keluar dari rumah sakit|xuất viện|paglabas ng ospital
+故障|こしょう|ပျက်စီးခြင်း|breakdown, malfunction|kerusakan|hỏng hóc|pagkasira
+修理|しゅうり|ပြုပြင်ခြင်း|repair|perbaikan|sửa chữa|pagkukumpuni
+特に|とくに|အထူးသဖြင့်|especially|terutama|đặc biệt là|lalo na
+最近|さいきん|မကြာသေးမီက|recently|baru-baru ini|gần đây|kamakailan
+最初|さいしょ|အစပိုင်း|first, beginning|awal, pertama|đầu tiên, ban đầu|una, simula
+最後|さいご|နောက်ဆုံး|last, final|terakhir|cuối cùng|huli, panghuli
+途中|とちゅう|လမ်းခုလတ်|on the way, midway|di tengah perjalanan|giữa chừng|kalagitnaan
+以外|いがい|မှအပ|except, other than|selain, kecuali|ngoài, trừ|maliban sa
+以内|いない|အတွင်း|within|dalam|trong vòng|sa loob ng
+以上|いじょう|အထက်၊ အနည်းဆုံး|more than, at least|lebih dari, setidaknya|trên, ít nhất|higit sa, hindi bababa sa
+以下|いか|အောက်၊ မပိုသော|less than, no more than|kurang dari, tidak lebih dari|dưới, không quá|mas mababa sa, hindi hihigit sa
+必ず|かならず|မဖြစ်မနေ|certainly, without fail|pasti|nhất định|tiyak
+十分|じゅうぶん|လုံလောက်သော|enough, sufficient|cukup|đủ, đầy đủ|sapat
+自由|じゆう|လွတ်လပ်ခြင်း|freedom, free|kebebasan|tự do|kalayaan
 `.trim(),
-
   N3: `
 改善|かいぜん|တိုးတက်ကောင်းမွန်အောင်ပြုပြင်ခြင်း
 影響|えいきょう|သက်ရောက်မှု
@@ -160,19 +158,41 @@ const vocabularyData = {
 `.trim()
 };
 
+// ၂။ String Data များကို Multi-language Meanings Object အဖြစ် အော်တိုပြောင်းပေးမည့် Parser Function
+// String Data များကို Multi-language Meanings Object အဖြစ် အော်တိုပြောင်းပေးမည့် Parser Function
 function parseWords(text) {
-  return text.split("\n").map((line) => {
-    const [kanji, reading, meaning] = line.split("|");
-    return { kanji, reading, meaning };
-  });
+  if (Array.isArray(text)) return text;
+
+  return text
+    .trim()
+    .split("\n")
+    .map((line) => {
+      if (!line.trim()) return null;
+
+      const parts = line.split("|");
+
+      return {
+        kanji: parts[0]?.trim() || "",
+        reading: parts[1]?.trim() || "",
+        meanings: {
+          mm: parts[2]?.trim() || "",
+          en: parts[3]?.trim() || "",
+          id: parts[4]?.trim() || "",
+          vi: parts[5]?.trim() || "",
+          ph: parts[6]?.trim() || ""
+        }
+      };
+    })
+    .filter(Boolean);
 }
 
-const vocabularySets = {
-  N5: parseWords(vocabularyData.N5),
-  N4: parseWords(vocabularyData.N4),
-  N3: parseWords(vocabularyData.N3)
-};
 
+// ဒီနေရာမှာ ထည့်ပါ
+const vocabularySets = {
+  N5: parseWords(rawVocabularyData.N5),
+  N4: parseWords(rawVocabularyData.N4),
+  N3: parseWords(rawVocabularyData.N3)
+};
 let currentLevel = "";
 let currentQuestion = 0;
 let score = 0;
@@ -235,7 +255,7 @@ function showReviewWords() {
       index + 1,
       word.kanji,
       word.reading,
-      word.meaning
+      getMeaning(word)
     ].forEach((value) => {
       const cell = document.createElement("td");
       cell.textContent = value;
@@ -360,7 +380,8 @@ function showVocabulary(level) {
   vocabularySets[level].forEach((word, index) => {
     const row = document.createElement("tr");
 
-    [index + 1, word.kanji, word.reading, word.meaning].forEach((value) => {
+    // word.meaning အစား getMeaning(word) ကို သုံးပေးပါ
+    [index + 1, word.kanji, word.reading, getMeaning(word)].forEach((value) => {
       const cell = document.createElement("td");
       cell.textContent = value;
       row.appendChild(cell);
@@ -382,7 +403,6 @@ function showVocabulary(level) {
     vocabularyList.appendChild(row);
   });
 }
-
 // ==========================================
 // 1. LEVEL SELECTION LOGIC
 // ==========================================
@@ -493,7 +513,7 @@ function renderGameGrid() {
     });
     tilesData.push({
       id: word.kanji,
-      text: word.meaning,
+      text: getMeaning(word),
       type: "mm"
     });
   });
@@ -583,13 +603,13 @@ function createQuestion(word, direction, allWords) {
   const isJapaneseToMyanmar = direction === "ja-mm";
 
   const correctAnswer = isJapaneseToMyanmar
-    ? word.meaning
-    : `${word.kanji}（${word.reading}）`;
+  ? getMeaning(word)
+  : `${word.kanji}（${word.reading}）`;
 
   const getAnswer = (item) =>
-    isJapaneseToMyanmar
-      ? item.meaning
-      : `${item.kanji}（${item.reading}）`;
+  isJapaneseToMyanmar
+    ? getMeaning(item)
+    : `${item.kanji}（${item.reading}）`;
 
   const candidates = shuffle(
     allWords.filter((item) => getAnswer(item) !== correctAnswer)
@@ -659,7 +679,7 @@ function showQuestion() {
       `「${q.word.kanji}（${q.word.reading}）」の意味は？`;
   } else {
     questionTitle.textContent =
-      `「${q.word.meaning}」は日本語で何ですか？`;
+  `「${getMeaning(q.word)}」は日本語で何ですか？`;
   }
 
   feedback.textContent = "";
@@ -1041,12 +1061,6 @@ readingBackButton.addEventListener("click", () => {
   levelMenuScreen.hidden = false;
 });
 
-// メイン画面に戻る
-readingLevelBackButton.addEventListener("click", () => {
-  readingLevelScreen.hidden = true;
-  document.getElementById("level-screen").hidden = false;
-});
-
 // 文章読解・穴埋め問題の画面設定
 
 if ("serviceWorker" in navigator) {
@@ -1060,5 +1074,31 @@ if ("serviceWorker" in navigator) {
         console.error("PWA registration failed:", error);
       });
   });
+}
+
+// လက်ရှိ ရွေးထားသော ဘာသာစကား (Default က မြန်မာ)
+let currentLang = "mm";
+
+// Language Selector ကို ချိတ်ဆက်ခြင်း
+const langSelect = document.getElementById("lang-select");
+if (langSelect) {
+  langSelect.addEventListener("change", (e) => {
+    currentLang = e.target.value;
+    
+    // လက်တလော ဖွင့်ထားသော မျက်နှာပြင်ကို အသစ်ပြန်ဖြစ်စေရန် (သို့မဟုတ် စာသားများ ချက်ချင်းပြောင်းရန်)
+    // ဥပမာ - Quiz သို့မဟုတ် Vocabulary List ကို Refresh လုပ်ခြင်း
+    if (typeof renderVocabularyList === "function") {
+      // renderVocabularyList(); 
+    }
+  });
+}
+
+// အဓိပ္ပာယ်ထုတ်ယူရန် Helper Function
+function getMeaning(word) {
+  if (word.meanings && word.meanings[currentLang]) {
+    return word.meanings[currentLang];
+  }
+  // တကယ်လို့ ရွေးထားတဲ့ ဘာသာစကား မရှိသေးရင် မြန်မာဘာသာကို Default ပြန်ပြမည်
+  return word.meanings["mm"] || "";
 }
 
